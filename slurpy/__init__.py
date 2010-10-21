@@ -1,0 +1,1 @@
+from slurpy import main
