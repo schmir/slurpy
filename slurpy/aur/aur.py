@@ -12,7 +12,7 @@ class AUR(object):
     Just defines constants used by subclasses
     """
 
-    AUR_URL = "http://aur.archlinux.org/"
+    AUR_URL = "https://aur.archlinux.org/"
     INFO_URL = AUR_URL + "rpc.php?type=info&arg="
     SEARCH_URL = AUR_URL + "rpc.php?type=search&arg="
     SUBMIT_URL = AUR_URL + "pkgsubmit.php"

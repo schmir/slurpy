@@ -33,7 +33,7 @@ from aur import AUR
 def json_decode(url):
     """Open <url> and decode the json response"""
 
-    url = "http://" + urllib.quote(url[7:], "/?=&")
+    url = "https://" + urllib.quote(url[8:], "/?=&")
 
     request = urllib2.Request(url)
     request.add_header("Accept-encoding", "gzip")
@@ -58,7 +58,7 @@ def json_decode(url):
         return Json.loads(data)
 
 def json_mdecode(pkglist):
-    conn = httplib.HTTPConnection("aur.archlinux.org")
+    conn = httplib.HTTPSConnection("aur.archlinux.org")
     headers = {"Connection": "Keep-Alive",
             'User-agent': 'slurpy/%s' % VERSION,
             'Accept-encoding': 'gzip'}
