@@ -49,36 +49,7 @@ try:
 except ImportError:
     import simplejson as json
 
-try:
-    import pycurl
-except ImportError:
-    __doc__ = """Usage: slurpy [options] <operation> PACKAGE [PACKAGE2..]
-
- Operations:
-  -d, --download          download PACKAGE(s)
-                             if passed twice will also download dependencies
-                             from the AUR
-  -i, --info              show info for PACKAGE(s)
-  -s, --search            search for PACKAGE(s)
-  -u, --update            check explicitly installed packages for available
-                          updates
-                             if passed with --download flag(s), perform download
-                             operation for each package with an available update
-
- General options:
-      --ignore            comma seperated list of packages to ignore
-                             typically used together with -dd or -ud(d)
-  -c, --color             use colored output
-  -f, --force             overwrite existing files when dowloading
-  -q, --quiet             show only package names in search/update results
-  -t DIR, --save-to=DIR   target directory where files will be downloaded
-  -v, --verbose           show info messages
-                             if passed twice will also show debug messages
-
-  -h, --help              show this message
-      --version           show version information"""
-else:
-    __doc__ = """Usage: slurpy [options] [--sync] <operation> PACKAGE [PACKAGE2..] 
+__doc__ = """Usage: slurpy [options] [--sync] <operation> PACKAGE [PACKAGE2..]
        slurpy [options] --push FILE1 [FILE2..] 
 
  Modes:
@@ -798,16 +769,16 @@ if __name__ == '__main__':
     parser.add_option('--ignore', action='callback', callback=store_csv_to_list,
                             type='string', default=[], dest='ignore_list')
 
-    if 'pycurl' in sys.modules:
-        parser.add_option('-C', '--category', action='store', default=None)
-        parser.add_option('-P', '--push', action='store_true', default=False)
-        parser.add_option('-U', '--user', action='store', default=conf['user'])
-        parser.add_option('', '--cookie-file', action='store',
-                              default=conf['cookie_file'])
+    parser.add_option('-C', '--category', action='store', default=None)
+    parser.add_option('-P', '--push', action='store_true', default=False)
+    parser.add_option('-U', '--user', action='store', default=conf['user'])
+    parser.add_option('', '--cookie-file', action='store',
+                          default=conf['cookie_file'])
 
     opts, args = parser.parse_args()
 
-    if 'pycurl' in sys.modules and opts.push:
+    if opts.push:
+        import pycurl
         AURPush(opts, args).run()
     else:
         AURSync(opts, args).run()
