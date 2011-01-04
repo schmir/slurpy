@@ -45,9 +45,9 @@ from cStringIO import StringIO
 from tarfile import TarFile
 
 try:
-    import cjson as Json
+    import json
 except ImportError:
-    import json as Json
+    import simplejson as json
 
 try:
     import pycurl
@@ -139,10 +139,8 @@ def json_decode(url):
         # clean up
         del request
         del usock
-    try:
-        return Json.decode(data)
-    except AttributeError:
-        return Json.loads(data)
+
+    return json.loads(data)
 
 def read_config():
     """Read in the slurpy runtime config to set default options."""
